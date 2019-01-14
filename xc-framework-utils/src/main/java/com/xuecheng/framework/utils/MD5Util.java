@@ -55,8 +55,9 @@ public class MD5Util {
             throw e;
         } finally {
             try {
-                if (fileInputStream != null)
+                if (fileInputStream != null) {
                     fileInputStream.close();
+                }
             } catch (IOException e) {
                 throw e;
             }
