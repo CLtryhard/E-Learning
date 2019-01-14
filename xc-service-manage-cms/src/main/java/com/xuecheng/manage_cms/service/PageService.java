@@ -30,8 +30,8 @@ public class PageService {
      * @return
      */
     public QueryResponseResult findList(int page, int size, QueryPageRequest queryPageRequest){
-        //分页参数
-        //如果遇到小于的页码都要使其变回1
+        /*分页参数
+        如果遇到小于的页码都要使其变回1*/
         if (page<=0){
             page = 1;
         }
@@ -44,8 +44,10 @@ public class PageService {
         Pageable pageable = PageRequest.of(page, size);
         Page<CmsPage> cmsPages = repository.findAll(pageable);
         QueryResult queryResult = new QueryResult();
-        queryResult.setList(cmsPages.getContent());//数据列表
-        queryResult.setTotal(cmsPages.getTotalElements());//数据总记录数
+        //数据列表
+        queryResult.setList(cmsPages.getContent());
+        //数据总记录数
+        queryResult.setTotal(cmsPages.getTotalElements());
         QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.SUCCESS, queryResult);
         return queryResponseResult;
     }
