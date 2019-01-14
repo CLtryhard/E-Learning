@@ -22,7 +22,13 @@ public class PageService {
     @Autowired
     CmsPageRepository repository;
 
-    //页面查询方法
+    /**
+     * 页面查询方法
+     * @param page
+     * @param size
+     * @param queryPageRequest
+     * @return
+     */
     public QueryResponseResult findList(int page, int size, QueryPageRequest queryPageRequest){
         //分页参数
         //如果遇到小于的页码都要使其变回1
