@@ -58,7 +58,7 @@ public class VideoUtil {
                 int end = outstring.trim().indexOf(", start:");
                 if(end>=0){
                     String time = outstring.substring(start+10,end);
-                    if(time!=null && !time.equals("")){
+                    if(time!=null && !"".equals(time)){
                         return time.trim();
                     }
                 }
