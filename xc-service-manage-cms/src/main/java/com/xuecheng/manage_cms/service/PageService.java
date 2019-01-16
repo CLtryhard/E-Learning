@@ -7,10 +7,9 @@ import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
 import com.xuecheng.manage_cms.dao.CmsPageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * @Author: Lacne
@@ -30,6 +29,22 @@ public class PageService {
      * @return
      */
     public QueryResponseResult findList(int page, int size, QueryPageRequest queryPageRequest){
+        //设置条件匹配器
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+                .withMatcher("pageAliase", ExampleMatcher.GenericPropertyMatchers.contains());
+        //条件值对象
+        CmsPage cmsPage = new CmsPage();
+        //判断并设置站点id
+        if (StringUtils.isEmpty(queryPageRequest.getSiteId())) {
+            cmsPage.setSiteId(queryPageRequest.getSiteId());
+        }
+        //判断是否有页面别名并设置
+        if (StringUtils.isEmpty(queryPageRequest.getPageAliase())) {
+            cmsPage.setPageAliase(queryPageRequest.getPageAliase());
+        }
+        //创建条件实例
+        Example<CmsPage> example = Example.of(cmsPage, exampleMatcher);
+
         /*分页参数
         如果遇到小于的页码都要使其变回1*/
         if (page<=0){
@@ -42,7 +57,7 @@ public class PageService {
             size=10;
         }
         Pageable pageable = PageRequest.of(page, size);
-        Page<CmsPage> cmsPages = repository.findAll(pageable);
+        Page<CmsPage> cmsPages = repository.findAll(example, pageable);
         QueryResult queryResult = new QueryResult();
         //数据列表
         queryResult.setList(cmsPages.getContent());
