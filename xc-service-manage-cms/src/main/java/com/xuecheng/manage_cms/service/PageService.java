@@ -35,11 +35,11 @@ public class PageService {
         //条件值对象
         CmsPage cmsPage = new CmsPage();
         //判断并设置站点id
-        if (StringUtils.isEmpty(queryPageRequest.getSiteId())) {
+        if (!StringUtils.isEmpty(queryPageRequest.getSiteId())) {
             cmsPage.setSiteId(queryPageRequest.getSiteId());
         }
         //判断是否有页面别名并设置
-        if (StringUtils.isEmpty(queryPageRequest.getPageAliase())) {
+        if (!StringUtils.isEmpty(queryPageRequest.getPageAliase())) {
             cmsPage.setPageAliase(queryPageRequest.getPageAliase());
         }
         //创建条件实例

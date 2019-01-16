@@ -83,5 +83,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-core:5.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter-feign:unknown" level="project" />
+    <orderEntry type="library" name="xc-framework-common" level="project" />
   </component>
 </module>
