@@ -2,6 +2,7 @@ package com.xuecheng.manage_cms.service;
 
 import com.xuecheng.framework.domain.cms.CmsPage;
 import com.xuecheng.framework.domain.cms.request.QueryPageRequest;
+import com.xuecheng.framework.domain.cms.response.CmsPageResult;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
@@ -65,5 +66,18 @@ public class PageService {
         queryResult.setTotal(cmsPages.getTotalElements());
         QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.SUCCESS, queryResult);
         return queryResponseResult;
+    }
+
+    public CmsPageResult add (CmsPage cmsPage){
+        //校验索引是否重复
+        CmsPage cms = repository.findByPageNameAndPageWebPathAndSiteId(cmsPage.getPageName(), cmsPage.getPageWebPath(), cmsPage.getSiteId());
+        if (cms==null){
+            //首先要设置id为null,让MongoDB自增主键
+            cmsPage.setPageId(null);
+            repository.save(cmsPage);
+            return new CmsPageResult(CommonCode.SUCCESS, cmsPage);
+        }
+        //添加失败
+        return new CmsPageResult(CommonCode.FAIL, null);
     }
 }
