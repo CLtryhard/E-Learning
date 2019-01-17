@@ -5,6 +5,7 @@ import com.xuecheng.framework.domain.cms.CmsPage;
 import com.xuecheng.framework.domain.cms.request.QueryPageRequest;
 import com.xuecheng.framework.domain.cms.response.CmsPageResult;
 import com.xuecheng.framework.model.response.QueryResponseResult;
+import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.manage_cms.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,4 +50,16 @@ public class CmsPageController implements CmsPageControllerApi {
     public CmsPageResult updatePage(@PathVariable("id") String id,@RequestBody CmsPage cmsPage) {
         return service.update(id, cmsPage);
     }
+
+    /**
+     * 根据id删除页面
+     * @param id
+     * @return
+     */
+    @Override
+    @DeleteMapping("/del/{id}") //使用http的delete方法完成岗位操作
+    public ResponseResult delete(@PathVariable("id") String id) {
+        return service.delete(id);
+    }
+
 }

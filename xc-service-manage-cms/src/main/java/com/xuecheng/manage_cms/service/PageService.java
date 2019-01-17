@@ -6,6 +6,7 @@ import com.xuecheng.framework.domain.cms.response.CmsPageResult;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
+import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.manage_cms.dao.CmsPageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -70,6 +71,11 @@ public class PageService {
         return queryResponseResult;
     }
 
+    /**
+     * 添加
+     * @param cmsPage
+     * @return
+     */
     public CmsPageResult add (CmsPage cmsPage){
         //校验索引是否重复
         CmsPage cms = repository.findByPageNameAndPageWebPathAndSiteId(cmsPage.getPageName(), cmsPage.getPageWebPath(), cmsPage.getSiteId());
@@ -92,6 +98,12 @@ public class PageService {
         return null;
     }
 
+    /**
+     * 更新页面
+     * @param id
+     * @param cmsPage
+     * @return
+     */
     public CmsPageResult update(String id, CmsPage cmsPage){
         //先根据页面id从数据库查询页面信息
         CmsPage findPage = this.getById(id);
@@ -121,4 +133,20 @@ public class PageService {
         //修改失败
         return new CmsPageResult(CommonCode.FAIL, null);
     }
+
+    /**
+     * 删除页面
+     * @param id
+     * @return
+     */
+    public ResponseResult delete(String id){
+        CmsPage one = this.getById(id);
+        if(one!=null){
+            //删除页面
+            repository.deleteById(id);
+            return new ResponseResult(CommonCode.SUCCESS);
+        }
+        return new ResponseResult(CommonCode.FAIL);
+    }
+
 }
