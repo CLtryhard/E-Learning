@@ -12,6 +12,8 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Optional;
+
 /**
  * @Author: Lacne
  * @Date: 2019/1/14 15:30
@@ -78,6 +80,45 @@ public class PageService {
             return new CmsPageResult(CommonCode.SUCCESS, cmsPage);
         }
         //添加失败
+        return new CmsPageResult(CommonCode.FAIL, null);
+    }
+
+    public CmsPage getById(String id){
+        Optional<CmsPage> optional = repository.findById(id);
+        if (optional.isPresent()){
+            CmsPage cmsPage = optional.get();
+            return cmsPage;
+        }
+        return null;
+    }
+
+    public CmsPageResult update(String id, CmsPage cmsPage){
+        //先根据页面id从数据库查询页面信息
+        CmsPage findPage = this.getById(id);
+        //判断是否存在页面
+        if (findPage!=null){
+            //如果不存在就可以开始修改数据了
+            //更新模板id
+            findPage.setTemplateId(cmsPage.getTemplateId());
+            //更新所属站点
+            findPage.setSiteId(cmsPage.getSiteId());
+            //更新页面别名
+            findPage.setPageAliase(cmsPage.getPageAliase());
+            //更新页面名称
+            findPage.setPageName(cmsPage.getPageName());
+            //更新访问路径
+            findPage.setPageWebPath(cmsPage.getPageWebPath());
+            //更新物理路径
+            findPage.setPagePhysicalPath(cmsPage.getPagePhysicalPath());
+            //执行更新
+            CmsPage savePage = repository.save(cmsPage);
+            if (savePage != null){
+                //保存成功
+                CmsPageResult cmsPageResult = new CmsPageResult(CommonCode.SUCCESS, savePage);
+                return  cmsPageResult;
+            }
+        }
+        //修改失败
         return new CmsPageResult(CommonCode.FAIL, null);
     }
 }

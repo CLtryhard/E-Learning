@@ -31,4 +31,22 @@ public class CmsPageController implements CmsPageControllerApi {
     public CmsPageResult add(@RequestBody CmsPage cmsPage) {
         return service.add(cmsPage);
     }
+
+    @Override
+    @GetMapping("/query/{id}")
+    public CmsPage findById(String id) {
+        return service.getById(id);
+    }
+
+    /**
+     * 更新使用put方法,http中put表示更新
+     * @param id
+     * @param cmsPage
+     * @return
+     */
+    @Override
+    @PutMapping("/update/{id}")
+    public CmsPageResult updatePage(@PathVariable String id,@RequestBody CmsPage cmsPage) {
+        return service.update(id, cmsPage);
+    }
 }

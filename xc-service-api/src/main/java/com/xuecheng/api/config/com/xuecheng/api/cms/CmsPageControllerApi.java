@@ -17,21 +17,44 @@ import io.swagger.annotations.ApiOperation;
 public interface CmsPageControllerApi {
     /**
      * 页面查询
+     * @param page
+     * @param size
+     * @param queryPageRequest
+     * @return
      */
     @ApiOperation("分页查询页面列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name="page",value = "页码",required=true,paramType="path",dataType="int"),
             @ApiImplicitParam(name="size",value = "每页记录数",required=true,paramType="path",dataType="int")
     })
-    public QueryResponseResult findList(int page, int size, QueryPageRequest queryPageRequest);
+    QueryResponseResult findList(int page, int size, QueryPageRequest queryPageRequest);
 
     /**
      * 新增页面
+     * @param cmsPage
+     * @return
      */
     @ApiOperation("新增页面")
     @ApiImplicitParams({
             @ApiImplicitParam(name="page",value = "页码",required=true,paramType="path",dataType="int"),
             @ApiImplicitParam(name="size",value = "每页记录数",required=true,paramType="path",dataType="int")
     })
-    public CmsPageResult add (CmsPage cmsPage);
+    CmsPageResult add(CmsPage cmsPage);
+
+    /**
+     * 根据页面id查询页面信息
+     * @param id
+     * @return
+     */
+    @ApiOperation("通过id查询页面信息")
+    CmsPage findById(String id);
+
+    /**
+     * 修改页面
+     * @param id
+     * @param cmsPage
+     * @return
+     */
+    @ApiOperation("修改页面")
+    CmsPageResult updatePage(String id, CmsPage cmsPage);
 }
