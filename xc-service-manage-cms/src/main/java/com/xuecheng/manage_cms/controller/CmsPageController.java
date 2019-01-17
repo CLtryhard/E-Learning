@@ -34,7 +34,7 @@ public class CmsPageController implements CmsPageControllerApi {
 
     @Override
     @GetMapping("/query/{id}")
-    public CmsPage findById(String id) {
+    public CmsPage findById(@PathVariable("id") String id) {
         return service.getById(id);
     }
 
