@@ -34,6 +34,10 @@ public class GridFSTemplateTest {
     @Autowired
     GridFSBucket gridFSBucket;
 
+    /**
+     * 存储模板文件
+     * @throws FileNotFoundException
+     */
     @Test
     public void testGridFs() throws FileNotFoundException {
         //要存储的文件
@@ -47,6 +51,10 @@ public class GridFSTemplateTest {
         System.out.println(file);
     }
 
+    /**
+     * 取文件
+     * @throws IOException
+     */
     @Test
     public void queryFile() throws IOException {
         String fileId = "";
